@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>₹ Currency AI Scanner</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<header>
+  <div class="badge"><span class="badge-dot"></span> AI Currency Recognition v2.1</div>
+  <h1>Currency <em>AI</em> Scanner</h1>
+  <p class="sub">Real-time note detection · ESP32 Integration</p>
+</header>
+
+<div class="grid">
+
+  <!-- ── Left: Camera Feed ── -->
+  <div class="card">
+    <div class="card-hdr">Live Feed</div>
+    <div class="cam-wrap">
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="canvas"></canvas>
+
+      <!-- shown when camera is off -->
+      <div class="cam-off" id="camOff">
+        <div class="cam-off-icon">📷</div>
+        <span>Camera inactive</span>
+        <small>Press Start Camera</small>
+      </div>
+
+      <!-- scanning beam animation -->
+      <div class="scan-ov" id="scanOv">
+        <div class="scan-frame"><span></span></div>
+        <div class="scan-beam"></div>
+      </div>
+
+      <!-- AI active chip -->
+      <div class="ai-chip" id="aiChip">
+        <span class="ai-dot"></span> AI Model Active
+      </div>
+
+      <!-- live colour swatch sampled from camera -->
+      <div class="colour-swatch" id="colourSwatch" title="Sampled colour from note"></div>
+    </div>
+  </div>
+
+  <!-- ── Right: Controls + Output + Status ── -->
+  <div class="right">
+
+    <div class="card">
+      <div class="card-hdr">Controls</div>
+      <div class="btn-grp">
+        <button class="btn btn-y" id="btnStart" onclick="startCamera()">▶ &nbsp;Start Camera</button>
+        <button class="btn btn-g" id="btnScan"  onclick="scanNote()"   disabled>🔍 &nbsp;Scan Note</button>
+        <button class="btn btn-e" id="btnSend"  onclick="sendESP32()"  disabled>📡 &nbsp;Send Data to ESP32</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr">AI Detection Output</div>
+      <div class="out-body">
+
+        <!-- detected note -->
+        <div class="note-box">
+          <div class="note-lbl">Detected Note</div>
+          <div class="note-val" id="noteVal">—</div>
+        </div>
+
+        <!-- colour detected label -->
+        <div class="colour-row" id="colourRow" style="display:none">
+          <div class="colour-pill" id="colourPill"></div>
+          <span id="colourName">—</span>
+        </div>
+
+        <!-- confidence bar -->
+        <div class="prob-wrap">
+          <div class="prob-top">
+            <span>Confidence Score</span>
+            <strong id="probTxt">—</strong>
+          </div>
+          <div class="prob-bar">
+            <div class="prob-fill" id="probFill"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr">Status</div>
+      <div class="stat-body">
+        <div id="status">Awaiting action…</div>
+      </div>
+    </div>
+
+  </div><!-- /right -->
+</div><!-- /grid -->
+
+<footer>
+  ESP32-CAM target · <span>192.168.4.1</span> · Connect device to WiFi "ESP32_CAM"
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
